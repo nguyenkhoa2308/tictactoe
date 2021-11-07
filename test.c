@@ -135,8 +135,24 @@ void ticTacToeGame(char a[][3], int *yourChoice, int *b, int *count, char *playe
     } 
 }
 
-void checkWinning(){
-    
+void checkWinning(char a[][3]){
+    // Check row
+    for (int i = 0; i < 3;i++){
+        for (int j = 0; j < 3;){
+            if (a[i][j] == a[i][j+1] && a[i][j+1] == a[i][j+2]){
+                if (a[i][j] == 'X'){
+                    printf("Player 1 - X - Win");
+                    break;
+                }
+                else{
+                    printf("Player 2 - 0 - Win");
+                    break;
+                }
+            }
+        }
+    }
+    // Check column
+    // Check circle
 }
 
 int main(){
@@ -155,7 +171,5 @@ int main(){
         ticTacToeGame(a, &yourChoice, b, &count, &player);   
         footStep += 1;
     } while (footStep <= 5);
-    showTable(a);
-    getchar();
     return 0;
 }
