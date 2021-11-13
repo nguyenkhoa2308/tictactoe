@@ -106,8 +106,60 @@ void coords(int yourChoice, char *player){
     }
 }
 
+int checkWinning(char a[][3]){
+    // i == row; j == column
+    // Check row
+    for (int i = 0; i < 3;i++){
+        for (int j = 0; j < 3;){
+            if (a[i][j] == a[i][j+1] && a[i][j+1] == a[i][j+2]){
+                if (a[i][j] == 'X'){
+                    printf("Player 1 - X - Win");
+                    return 1;
+                }
+                else{
+                    printf("Player 2 - 0 - Win");
+                    return 1;
+                }
+            }
+            else{
+                break;
+            }
+        }
+    }
+    // Check column
+    for (int j = 0; j < 3;j++){
+        for (int i = 0; i < 3;){
+            if (a[i][j] == a[i+1][j] && a[i+1][j] == a[i+2][j]){
+                if (a[i][j] == 'X'){
+                    printf("Player 1 - X - Win");
+                    return 1;
+                }
+                else{
+                    printf("Player 2 - 0 - Win");
+                    return 1;
+                }
+            }
+            else{
+                break;
+            }
+        }
+    }
+    // Check circle
+    if(a[0][0] == a[1][1] && a[1][1] == a[2][2] || a[0][2] == a[1][1] && a[1][1] == a[2][0]){
+        if (a[1][1] == 'X'){
+            printf("Player 1 - X - Win");
+            return 1;
+        }
+        else{
+            printf("Player 2 - O - Win");
+            return 1;
+        }
+    }
+    
+}
+
 // Tìm vị trí để điền X và O
-void ticTacToeGame(char a[][3], int *yourChoice, int *b, int *count, char *player){
+int ticTacToeGame(char a[][3], int *yourChoice, int *b, int *count, char *player){
     do{
         player_1(yourChoice);     // Nguoi choi so 1 chon vi tri dien X tuong ung vs cac so tu 1 - 8
         coords(*yourChoice, player);
@@ -119,6 +171,10 @@ void ticTacToeGame(char a[][3], int *yourChoice, int *b, int *count, char *playe
     system("cls");
     showTable(a);
     b[(*count)++] = *yourChoice;  // Luu vi tri nguoi choi da chon
+    if(checkWinning(a) == 1){
+        // exit(0);
+        return 0;
+    }
 
     if ((*count) < 10){ // Neu so lan chon be hon 10 thi cho nguoi choi so 2 chon
         do{ // Phan nay tuong tu nhu nguoi choi so 1.
@@ -132,28 +188,14 @@ void ticTacToeGame(char a[][3], int *yourChoice, int *b, int *count, char *playe
         system("cls");
         showTable(a);
         b[(*count)++] = *yourChoice;
+        if(checkWinning(a) == 1){
+            // exit(0);
+            return 0;
+        }
     } 
 }
 
-void checkWinning(char a[][3]){
-    // Check row
-    for (int i = 0; i < 3;i++){
-        for (int j = 0; j < 3;){
-            if (a[i][j] == a[i][j+1] && a[i][j+1] == a[i][j+2]){
-                if (a[i][j] == 'X'){
-                    printf("Player 1 - X - Win");
-                    break;
-                }
-                else{
-                    printf("Player 2 - 0 - Win");
-                    break;
-                }
-            }
-        }
-    }
-    // Check column
-    // Check circle
-}
+
 
 int main(){
     system("cls");
@@ -168,7 +210,13 @@ int main(){
     //Cac ham` chinh' de? chay. chuong trinh
     showTable(a);  
     do{
+        if (ticTacToeGame(a, &yourChoice, b, &count, &player) == 0){
+            break;
+        }
         ticTacToeGame(a, &yourChoice, b, &count, &player);   
+        if (ticTacToeGame(a, &yourChoice, b, &count, &player) == 0){
+            break;
+        }
         footStep += 1;
     } while (footStep <= 5);
     return 0;
