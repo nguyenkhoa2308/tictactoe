@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <conio.h>
 
 // Hiển thị bảng để chơi cờ caro và các số tương ứng với vị trí điền X hoặc O
 void showTable(char a[][3]){
@@ -235,5 +236,6 @@ int main(){
             break;
         }
     } while (footStep <= 5);
+    getch();
     return 0;
 }
